@@ -21,6 +21,31 @@ instructions = """
 
 사용자가 질문하면, 위 지침을 모두 반영하여 재밌고 이해하기 쉽게 답변해
 """
-messages = [
-    {"role": "system", "content": instructions}
-]
+if "messages" not in st.session_state:
+    st.session_state("messages"] = [
+        {"role": "system", "content": instructions}
+    ]
+
+st.title("나만의 GPT 챗봇")
+
+user_input = st.text_input("질문을 입력하세요:", "")
+
+if user_input
+    # 사용자 메시지 추가
+    st.session_state["messages"].append({"role": "user", "content": user_input})
+
+    # GPT 호출
+    response = client.responses.create(
+        model="gpt-4o-mini",
+        input=st.session_state["messages"]
+    )
+
+    bot_reply = response.output_text
+
+    # 대화 기록 업데이트
+    st.session_state["messages"].append({"role": "assistant", "content": bot_reply})
+
+# 대화 내역 출력
+for msg in st.session_state["messages"]:
+    if msg["role"] != "system":
+        st.write(f"**{msg["role"]}**: {msg['content']}")
